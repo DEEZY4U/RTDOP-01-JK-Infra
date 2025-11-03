@@ -15,3 +15,17 @@ module "security_groups" {
   ec2_sg_python_app = "SG for Python App Port"
   ec2_sg_rds_name = "SG for RDS"
 }
+
+module "ec2" {
+  source = "./ec2"
+  ami_id = var.ami_id
+  instance_type = "t2.micro"
+  key_name = var.key_name
+  public_key = var.public_key
+  tag_name = "EC2 Ubuntu"
+  subnet_id = tolist(module.networking.dev_rtdop_01_public_subnets)[0]
+  sg_enable_ssh_http = module.security_groups.sg_ec2_sg_ssh_https_id
+  sg_enable_app_port = module.security_groups.sg_ec2_python_app_id
+  enable_public_id = true
+  user_data_install_apache = templatefile("./template/ec2_install_app.sh", {})
+}

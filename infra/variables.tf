@@ -22,3 +22,18 @@ variable "us_east_az" {
   type        = list(string)
   description = "Availability Zones"
 }
+
+variable "ami_id" {
+  type        = string
+  description = "AMI Id for EC2 instance"
+}
+
+variable "key_name" {
+  type = string
+  description = "Key Name for EC2"
+}
+
+variable "public_key" {
+  type        = string
+  description = "Public key for EC2 instance"
+}
