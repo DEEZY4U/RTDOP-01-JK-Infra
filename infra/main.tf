@@ -27,5 +27,18 @@ module "ec2" {
   sg_enable_ssh_http = module.security_groups.sg_ec2_sg_ssh_https_id
   sg_enable_app_port = module.security_groups.sg_ec2_python_app_id
   enable_public_id = true
-  user_data_install_apache = templatefile("./template/ec2_install_app.sh", {})
+  user_data_install_apache = templatefile("./template/ec2_install_app.sh", {
+    db_endpoint = module.rds_db_instance.rds_endpoint
+  })
+}
+
+module "rds_db_instance" {
+  source = "./rds"
+  db_subnet_group_name = "dev_rtdop_01_rds_subnet_group"
+  subnet_groups = tolist(module.networking.dev_rtdop_01_private_subnets)
+  rds_mysql_sg_id = module.security_groups.sg_ec2_sg_rds_id
+  mysql_db_identifier = "mydb"
+  mysql_username = "dbuser"
+  mysql_password = "dbpassword"
+  mysql_dbname = "devprojdb"
 }
