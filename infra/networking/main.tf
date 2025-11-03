@@ -12,6 +12,10 @@ output "dev_rtdop_01_public_subnets" {
   value = aws_subnet.dev_rtdop_01_public_subnets.*.id
 }
 
+output "dev_rtdop_01_private_subnets" {
+  value = aws_subnet.dev_rtdop_01_private_subnets.*.id
+}
+
 output "dev_rtdop_01_public_subnets_cidr_block" {
   value = aws_subnet.dev_rtdop_01_public_subnets.*.cidr_block
 }
