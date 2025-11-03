@@ -42,3 +42,12 @@ module "rds_db_instance" {
   mysql_password = "dbpassword"
   mysql_dbname = "devprojdb"
 }
+
+module "lb_target_group" {
+  source = "./lb-target-group"
+  lb_target_group_name = "dev-rtdop-01-lb-target-group"
+  lb_target_group_port = 5000
+  lb_target_group_protocol = "HTTP"
+  vpc_id = module.networking.dev_rtdop_01_vpc_id
+  ec2_instance_id = module.ec2.dev_rtdop_01_ec2_instance_id
+}
