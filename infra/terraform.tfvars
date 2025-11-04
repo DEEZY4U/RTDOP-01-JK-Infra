@@ -7,3 +7,5 @@ us_east_az = ["us-east-1a", "us-east-1b"]
 key_name = "Infra_AWS"
 public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMi+zvjrAljb8aFIyO4mrpebse65SR72NSpvmrOgicUY deezy@elaine"
 ami_id = "ami-0ecb62995f68bb549"
+
+domain_name = "todo.deezyboi.space"

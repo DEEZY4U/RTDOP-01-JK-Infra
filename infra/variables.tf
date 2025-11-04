@@ -37,3 +37,8 @@ variable "public_key" {
   type        = string
   description = "Public key for EC2 instance"
 }
+
+variable "domain_name" {
+  type = string
+  description = "Domain Name for application"
+}
