@@ -18,18 +18,18 @@ output "dev_rtdop_01_ec2_instance_id" {
 }
 
 resource "aws_instance" "dev_rtdop_01_ec2" {
-  ami = var.ami_id
-  instance_type = var.instance_type
-  key_name = var.key_name
-  subnet_id = var.subnet_id
-  vpc_security_group_ids = [ var.sg_enable_ssh_http, var.sg_enable_app_port ]
+  ami                         = var.ami_id
+  instance_type               = var.instance_type
+  key_name                    = var.key_name
+  subnet_id                   = var.subnet_id
+  vpc_security_group_ids      = [var.sg_enable_ssh_http, var.sg_enable_app_port]
   associate_public_ip_address = var.enable_public_id
 
   user_data = var.user_data_install_app
 
   metadata_options {
     http_endpoint = "enabled"
-    http_tokens = "required"
+    http_tokens   = "required"
   }
 
   tags = {
@@ -38,6 +38,6 @@ resource "aws_instance" "dev_rtdop_01_ec2" {
 }
 
 resource "aws_key_pair" "dev_rtdop_01_public_key" {
-  key_name = var.key_name
+  key_name   = var.key_name
   public_key = var.public_key
 }

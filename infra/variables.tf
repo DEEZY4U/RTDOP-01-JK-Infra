@@ -29,7 +29,7 @@ variable "ami_id" {
 }
 
 variable "key_name" {
-  type = string
+  type        = string
   description = "Key Name for EC2"
 }
 
@@ -39,6 +39,6 @@ variable "public_key" {
 }
 
 variable "domain_name" {
-  type = string
+  type        = string
   description = "Domain Name for application"
 }

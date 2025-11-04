@@ -31,9 +31,9 @@ resource "aws_vpc" "dev_rtdop_01_vpc_us_east_1" {
 
 # setup public subnet
 resource "aws_subnet" "dev_rtdop_01_public_subnets" {
-  count = length(var.cidr_public_subnet)
-  vpc_id = aws_vpc.dev_rtdop_01_vpc_us_east_1.id
-  cidr_block = element(var.cidr_public_subnet, count.index)
+  count             = length(var.cidr_public_subnet)
+  vpc_id            = aws_vpc.dev_rtdop_01_vpc_us_east_1.id
+  cidr_block        = element(var.cidr_public_subnet, count.index)
   availability_zone = element(var.us-east-az, count.index)
 
   tags = {
@@ -43,9 +43,9 @@ resource "aws_subnet" "dev_rtdop_01_public_subnets" {
 
 # setup private subnet
 resource "aws_subnet" "dev_rtdop_01_private_subnets" {
-  count = length(var.cidr_private_subnet)
-  vpc_id = aws_vpc.dev_rtdop_01_vpc_us_east_1.id
-  cidr_block = element(var.cidr_private_subnet, count.index)
+  count             = length(var.cidr_private_subnet)
+  vpc_id            = aws_vpc.dev_rtdop_01_vpc_us_east_1.id
+  cidr_block        = element(var.cidr_private_subnet, count.index)
   availability_zone = element(var.us-east-az, count.index)
 
   tags = {
@@ -87,14 +87,14 @@ resource "aws_route_table" "dev_rtdop_01_private_rt" {
 
 # public rt & public subnet association
 resource "aws_route_table_association" "dev_rtdop_01_public_rt_subnet_association" {
-  count = length(aws_subnet.dev_rtdop_01_public_subnets)
-  subnet_id = aws_subnet.dev_rtdop_01_public_subnets[count.index].id
+  count          = length(aws_subnet.dev_rtdop_01_public_subnets)
+  subnet_id      = aws_subnet.dev_rtdop_01_public_subnets[count.index].id
   route_table_id = aws_route_table.dev_rtdop_01_public_rt.id
 }
 
 # private rt & private subnet association
 resource "aws_route_table_association" "dev_rtdop_01_private_rt_subnet_association" {
-  count = length(aws_subnet.dev_rtdop_01_private_subnets)
-  subnet_id = aws_subnet.dev_rtdop_01_private_subnets[count.index].id
+  count          = length(aws_subnet.dev_rtdop_01_private_subnets)
+  subnet_id      = aws_subnet.dev_rtdop_01_private_subnets[count.index].id
   route_table_id = aws_route_table.dev_rtdop_01_private_rt.id
 }
