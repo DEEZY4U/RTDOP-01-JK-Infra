@@ -7,7 +7,7 @@ variable "subnet_id" {}
 variable "sg_enable_ssh_http" {}
 variable "sg_enable_app_port" {}
 variable "enable_public_id" {}
-variable "user_data_install_apache" {}
+variable "user_data_install_app" {}
 
 output "ssh_connection_for_ec2" {
   value = format("%s%s", "ssh -i /home/deezy/.ssh/${var.key_name} ubuntu@", aws_instance.dev_rtdop_01_ec2.public_ip)
@@ -25,7 +25,7 @@ resource "aws_instance" "dev_rtdop_01_ec2" {
   vpc_security_group_ids = [ var.sg_enable_ssh_http, var.sg_enable_app_port ]
   associate_public_ip_address = var.enable_public_id
 
-  user_data = var.user_data_install_apache
+  user_data = var.user_data_install_app
 
   metadata_options {
     http_endpoint = "enabled"
