@@ -27,7 +27,7 @@ module "ec2" {
   sg_enable_ssh_http = module.security_groups.sg_ec2_sg_ssh_https_id
   sg_enable_app_port = module.security_groups.sg_ec2_python_app_id
   enable_public_id = true
-  user_data_install_apache = templatefile("./template/ec2_install_app.sh", {
+  user_data_install_app = templatefile("./template/ec2_install_app.sh", {
     db_endpoint = module.rds_db_instance.rds_endpoint
   })
 }
@@ -50,4 +50,33 @@ module "lb_target_group" {
   lb_target_group_protocol = "HTTP"
   vpc_id = module.networking.dev_rtdop_01_vpc_id
   ec2_instance_id = module.ec2.dev_rtdop_01_ec2_instance_id
+}
+
+module "alb" {
+  source = "./alb"
+  lb_name = "dev-rtdop-01-alb"
+  lb_type = "application"
+  sg_enable_ssh_http = module.security_groups.sg_ec2_sg_ssh_https_id
+  subnet_id = tolist(module.networking.dev_rtdop_01_public_subnets)
+  tag_name = "dev-rtdop-01-alb"
+  lb_target_group_arn = module.lb_target_group.dev_rtdop_01_lb_target_group_arn
+  lb_listener_port           = 5000
+  lb_listener_protocol       = "HTTP"
+  lb_listener_default_action = "forward"
+  lb_https_listener_port     = 443
+  lb_https_listener_protocol = "HTTPS"
+  dev_rtdop_01_acm_arn = module.acm.dev_rtdop_01_acm_arn
+}
+
+module "hosted_zone" {
+  source = "./hosted-zone"
+  domain_name = var.domain_name
+  aws_lb_dns_name = module.alb.aws_lb_dns_name
+  aws_lb_zone_id = module.alb.aws_lb_zone_id
+}
+
+module "acm" {
+  source = "./acm"
+  domain_name = var.domain_name
+  hosted_zone_id = module.hosted_zone.hosted_zone_id
 }

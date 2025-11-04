@@ -20,7 +20,7 @@ resource "aws_lb_target_group" "dev_rtdop_01_lb_target_group" {
     unhealthy_threshold = 2
     timeout = 2
     interval = 5
-    matcher = "200"  # has to be HTTP 200 or fails
+    matcher = "200"
   }
 }
 
@@ -29,3 +29,4 @@ resource "aws_lb_target_group_attachment" "dev_rtdop_01_lb_target_group_attachme
   target_id        = var.ec2_instance_id
   port             = 5000
 }
+
