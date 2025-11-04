@@ -27,9 +27,10 @@ After=network.target
 [Service]
 User=ubuntu
 WorkingDirectory=/home/ubuntu/Python-REST-API-01-To-Do-App
+Environment="API_BASE_URL=https://todo.deezyboi.space"
 Environment="DB_HOST=${db_endpoint}"
 Environment="DB_USER=dbuser"
-Environment="DB_PASS=dbpassword"
+Environment="DB_PASSWORD=dbpassword"
 Environment="DB_NAME=devprojdb"
 ExecStart=/home/ubuntu/Python-REST-API-01-To-Do-App/venv/bin/python /home/ubuntu/Python-REST-API-01-To-Do-App/app.py
 Restart=always
